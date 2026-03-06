@@ -9,9 +9,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Click & Teach – Digital Teaching Platform for Science (8th–12th)",
+  title: "Click & Teach – Digital Teaching Platform for STEM (8th–12th)",
   description:
-    "Click & Teach is a complete digital teaching platform for Science educators (8th–12th) with ready-to-use presentations, diagrams, animations, simulations, and assessments — all organized chapter-wise and accessible in one click.",
+    "Click & Teach is a complete digital teaching platform for STEM educators (8th–12th) with ready-to-use presentations, diagrams, animations, simulations, and assessments — all organized chapter-wise and accessible in one click.",
 };
 
 export default function RootLayout({
