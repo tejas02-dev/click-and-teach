@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Monitor,
@@ -11,6 +11,8 @@ import {
   Settings2,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   Presentation,
   Pencil,
   ScanSearch,
@@ -29,21 +31,21 @@ import {
 } from "lucide-react";
 
 const tools = [
-  { icon: Monitor,      title: "Full-Screen Teaching Mode", body: "Distraction-free mode built for smartboards and digital panels." },
-  { icon: Pencil,       title: "Highlight & Annotate",      body: "Draw, highlight, and annotate live on any content during the lecture." },
-  { icon: ScanSearch,   title: "Zoom & Pan",                body: "Zoom into any diagram or slide for close-up explanations." },
-  { icon: RotateCw,     title: "Rotate Diagrams",           body: "Rotate and pan 3D and 2D diagrams to explain from every angle." },
-  { icon: Presentation, title: "1-Click Lecture Mode",      body: "Open any chapter and jump straight to teaching — no setup needed." },
-  { icon: Layers,       title: "All Content Types",         body: "PPTs, diagrams, animations, simulations, and question banks in one place." },
+  { icon: Monitor,      title: "Full-Screen Teaching Mode", body: "Distraction-free on smartboards." },
+  { icon: Pencil,       title: "Highlight & Annotate",      body: "Draw and annotate live on any content." },
+  { icon: ScanSearch,   title: "Zoom & Pan",                body: "Zoom into diagrams and slides." },
+  { icon: RotateCw,     title: "Rotate Diagrams",           body: "Rotate 2D/3D diagrams for every angle." },
+  { icon: Presentation, title: "1-Click Lecture Mode",      body: "Open a chapter and start teaching." },
+  { icon: Layers,       title: "All Content Types",         body: "PPTs, diagrams, animations, sims, questions — one place." },
 ];
 
 const benefits = [
-  { icon: Star,      title: "Standardized quality",       body: "Every class follows the same high-quality structure, regardless of the teacher or branch." },
-  { icon: TrendingUp,title: "Higher engagement",          body: "Visual and interactive content keeps students focused and improves concept clarity." },
-  { icon: Clock,     title: "Faster preparation",         body: "Ready-made content and tools cut prep time so teachers can focus on delivery." },
-  { icon: Award,     title: "Professional experience",    body: "A polished digital classroom experience that builds trust with parents and students." },
-  { icon: Users,     title: "Increased satisfaction",     body: "Parents and students see visible improvements in teaching quality and outcomes." },
-  { icon: BarChart3, title: "Better outcomes",            body: "Visual and simulation-based learning leads to stronger concept clarity and exam performance." },
+  { icon: Star,      title: "Standardized quality",       body: "Same high-quality structure, every teacher and branch." },
+  { icon: TrendingUp,title: "Higher engagement",          body: "Visual, interactive content; better concept clarity." },
+  { icon: Clock,     title: "Faster preparation",         body: "Ready content cuts prep time." },
+  { icon: Award,     title: "Professional experience",    body: "Polished digital classroom; builds trust." },
+  { icon: Users,     title: "Increased satisfaction",      body: "Visible improvements in quality and outcomes." },
+  { icon: BarChart3, title: "Better outcomes",            body: "Visual and simulation-based learning; stronger results." },
 ];
 
 const faqItems = [
@@ -69,12 +71,11 @@ const platformFeatures = [
     icon: Monitor,
     label: "Smartboard Teaching",
     title: "Teach live on any smartboard or digital panel",
-    description: "Deliver every lesson directly on your smartboard. Access the full content library — presentations, diagrams, animations, and simulations — with one click. No prep delays, no switching apps.",
+    description: "Full content library on your smartboard — one click, no prep.",
     bullets: [
-      "Annotate, highlight, zoom, and rotate live on screen",
-      "Full-screen distraction-free teaching mode",
-      "Works on all smartboards and digital panels",
-      "Instant access to chapter-wise content mid-lecture",
+      "Annotate, highlight, zoom, rotate live",
+      "Full-screen teaching mode",
+      "Works on all smartboards & panels",
     ],
     image: "/CAT-SmartBoard.png",
     alt: "Click & Teach on a smartboard showing Chemical Kinetics",
@@ -86,11 +87,10 @@ const platformFeatures = [
     icon: BarChart3,
     label: "Institute Dashboard",
     title: "Track and monitor your entire institute",
-    description: "See every topic, teacher, and lecture planned across your institute in one dashboard. Spot trends, monitor usage, and ensure consistent quality at a glance.",
+    description: "One dashboard for topics, teachers, lectures, and usage.",
     bullets: [
-      "Live stats: topics, teachers, lectures, usage",
-      "Track platform usage across branches",
-      "Monitor teacher activity and engagement",
+      "Live stats across branches",
+      "Monitor teacher activity",
       "Standardize quality institute-wide",
     ],
     image: "/CAT-Dashboard.png",
@@ -103,12 +103,11 @@ const platformFeatures = [
     icon: BookOpen,
     label: "Lecture Planning",
     title: "Comprehensive lecture planning in minutes",
-    description: "Build lessons from the content library using drag-and-drop. Filter by board, standard, subject, and chapter. Teachers plan faster and teach with complete confidence.",
+    description: "Drag-and-drop planning. Filter by board, standard, subject, chapter.",
     bullets: [
-      "Drag-and-drop topic builder",
-      "Filter by board, standard, subject, and chapter",
-      "Saves and reuses lecture plans",
-      "Links directly to smartboard teaching mode",
+      "Topic builder & filters",
+      "Save and reuse plans",
+      "One click to teaching mode",
     ],
     image: "/CAT-LecturePlanning.png",
     alt: "Lecture planning screen with topic builder and chapter filters",
@@ -120,12 +119,11 @@ const platformFeatures = [
     icon: ClipboardList,
     label: "Reports",
     title: "Generate detailed institute reports instantly",
-    description: "Download reports by date range with full breakdowns by board, standard, subject, chapter, topic, and lectures. Make data-driven decisions with clarity.",
+    description: "Reports by date range — boards, subjects, chapters, topics. One-click download.",
     bullets: [
-      "Filter by date range and data type",
-      "Boards, standards, subjects, chapters, topics",
-      "One-click report download",
-      "Compare periods to track improvement",
+      "Full breakdowns & filters",
+      "One-click download",
+      "Compare periods",
     ],
     image: "/CAT-Reports.png",
     alt: "Reports screen with filters and download button",
@@ -134,9 +132,34 @@ const platformFeatures = [
   },
 ];
 
+const FEATURE_AUTO_ADVANCE_MS = 6000;
+
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<string | null>(faqItems[0]?.question);
   const [activeFeature, setActiveFeature] = useState(platformFeatures[0].id);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveFeature((current) => {
+        const i = platformFeatures.findIndex((f) => f.id === current);
+        const next = (i + 1) % platformFeatures.length;
+        return platformFeatures[next].id;
+      });
+    }, FEATURE_AUTO_ADVANCE_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  const goToFeature = (id: string) => setActiveFeature(id);
+  const goPrev = () => {
+    const i = platformFeatures.findIndex((f) => f.id === activeFeature);
+    const prev = (i - 1 + platformFeatures.length) % platformFeatures.length;
+    setActiveFeature(platformFeatures[prev].id);
+  };
+  const goNext = () => {
+    const i = platformFeatures.findIndex((f) => f.id === activeFeature);
+    const next = (i + 1) % platformFeatures.length;
+    setActiveFeature(platformFeatures[next].id);
+  };
 
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
@@ -174,7 +197,7 @@ export default function Home() {
       </header>
 
       {/* ── Stats Splash ── */}
-      <section className="relative overflow-hidden bg-slate-950 pb-16 pt-16 text-white sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-28">
+      <section className="relative overflow-hidden bg-slate-950 pb-20 pt-20 text-white sm:pb-24 sm:pt-24 lg:pb-28 lg:pt-32">
         <div className="pointer-events-none absolute inset-0 -z-0">
           <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
           <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-indigo-600/10 blur-[80px]" />
@@ -183,19 +206,19 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           {/* Eyebrow */}
-          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-primary sm:mb-4">
+          <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-primary sm:mb-5">
             40,000+ Ready Resources · STEM (8th – 12th)
           </p>
 
           {/* Brand title */}
-          <h1 className="mb-8 text-center text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+          <h1 className="mb-10 text-center text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
             <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
               Click &amp; Teach
             </span>
           </h1>
 
           {/* Big stat grid */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
             {[
               { n: "1,000+",   label: "PPTs",              icon: Presentation,  accent: "from-primary/80 to-indigo-500/80",   glow: "rgba(99,102,241,0.35)" },
               { n: "15,000+",  label: "Diagrams",          icon: Network,       accent: "from-sky-500/80 to-cyan-500/80",     glow: "rgba(14,165,233,0.3)"  },
@@ -225,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden bg-slate-950 pb-0 pt-12 text-white sm:pt-16 lg:pt-24">
+      <section className="relative overflow-hidden bg-slate-950 pb-0 pt-16 text-white sm:pt-20 lg:pt-28">
         <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[500px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px] sm:h-96 sm:w-[700px] sm:blur-[120px]" />
         <div className="pointer-events-none absolute bottom-0 left-1/4 -z-0 h-48 w-72 rounded-full bg-indigo-500/10 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
         <div className="pointer-events-none absolute bottom-0 right-1/4 -z-0 h-48 w-72 rounded-full bg-sky-400/10 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
@@ -243,10 +266,10 @@ export default function Home() {
               Built for STEM Educators
             </span>
           </h1>
-          <p className="mx-auto mt-4 max-w-xl px-2 text-sm text-slate-400 sm:mt-5 sm:px-0 sm:text-base lg:text-lg">
-            Ready-to-use presentations, diagrams, animations, simulations, and assessments — organized chapter-wise and accessible in one click on your smartboard.
+          <p className="mx-auto mt-5 max-w-lg px-2 text-sm text-slate-400 sm:mt-6 sm:px-0">
+            Ready-to-use STEM content — chapter-wise, one click on your smartboard.
           </p>
-          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row">
             <button
               id="cta-demo"
               onClick={() => scrollToId("contact-section")}
@@ -265,7 +288,7 @@ export default function Home() {
         </div>
 
         {/* Hero mockup — product UI preview */}
-        <div className="relative z-10 mx-auto mt-10 max-w-5xl px-4 sm:mt-14 sm:px-6">
+        <div className="relative z-10 mx-auto mt-14 max-w-5xl px-4 sm:mt-20 sm:px-6">
           <div className="overflow-hidden rounded-t-xl shadow-2xl ring-1 ring-white/10 sm:rounded-t-2xl">
             <div className="flex items-center gap-1.5 bg-slate-800/90 px-3 py-2.5 sm:px-4 sm:py-3">
               <span className="h-2 w-2 rounded-full bg-red-500/70 sm:h-2.5 sm:w-2.5" />
@@ -346,26 +369,26 @@ export default function Home() {
       </section>
 
       {/* ── Main Content ── */}
-      <main className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-10 lg:pb-20 lg:pt-12">
+      <main className="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 lg:px-10 lg:pb-28 lg:pt-20">
 
-        {/* ── Key features (interactive tab switcher) ── */}
-        <section id="sections-features" className="mt-4 sm:mt-6 lg:mt-10">
-          <div className="mb-8 text-center sm:mb-10">
+        {/* ── Key features (carousel) ── */}
+        <section id="sections-features" className="mt-10 sm:mt-14 lg:mt-20">
+          <div className="mb-10 text-center sm:mb-14">
             <SectionLabel>Key features</SectionLabel>
             <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
               Everything you need in one platform
             </h2>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-              From teaching on smartboards to tracking your institute and planning lectures — Click &amp; Teach brings it all together.
+            <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+              Smartboards, dashboards, planning, reports — one platform.
             </p>
           </div>
 
           {/* Tab bar */}
-          <div className="mb-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+          <div className="mb-8 flex flex-wrap justify-center gap-2 sm:gap-3">
             {platformFeatures.map(({ id, icon: Icon, label }) => (
               <button
                 key={id}
-                onClick={() => setActiveFeature(id)}
+                onClick={() => goToFeature(id)}
                 className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all sm:px-5 sm:text-sm ${
                   activeFeature === id
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
@@ -378,41 +401,60 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Carousel: prev / panel / next */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goPrev}
+              className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-card text-muted-foreground shadow-md ring-1 ring-border/70 transition-colors hover:bg-primary hover:text-primary-foreground hover:ring-primary/50 sm:-left-2 sm:h-12 sm:w-12"
+              aria-label="Previous feature"
+            >
+              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-card text-muted-foreground shadow-md ring-1 ring-border/70 transition-colors hover:bg-primary hover:text-primary-foreground hover:ring-primary/50 sm:-right-2 sm:h-12 sm:w-12"
+              aria-label="Next feature"
+            >
+              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+
           {/* Active feature panel */}
           {platformFeatures.map(({ id, icon: Icon, title, description, bullets, image, alt, accent, glow }) => (
             <div
               key={id}
               className={`rounded-2xl bg-card shadow-sm ring-1 ring-border/70 sm:rounded-3xl transition-all duration-300 ${activeFeature === id ? "block" : "hidden"}`}
             >
-              <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+              <div className="grid gap-0 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.5fr)]">
                 {/* Left — text */}
-                <div className="flex flex-col justify-center gap-5 p-6 sm:p-8 lg:p-10">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} shadow-lg`}
+                <div className="flex flex-col justify-center gap-4 p-6 sm:p-8 lg:p-10">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} shadow-lg`}
                     style={{ boxShadow: `0 8px 24px ${glow}` }}>
                     <Icon className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">{title}</h3>
-                    <p className="mt-3 text-sm text-muted-foreground sm:text-base">{description}</p>
+                    <h3 className="text-xl font-bold tracking-tight sm:text-2xl">{title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{description}</p>
                   </div>
-                  <ul className="space-y-2.5">
-                    {bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3 text-sm text-muted-foreground">
-                        <span className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-[10px] font-bold text-white`}>✓</span>
+                  <ul className="space-y-2">
+                    {bullets.slice(0, 3).map((b) => (
+                      <li key={b} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-[9px] font-bold text-white`}>✓</span>
                         {b}
                       </li>
                     ))}
                   </ul>
                   <button
                     onClick={() => scrollToId("contact-section")}
-                    className="w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
+                    className="mt-1 w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
                   >
                     Book a Demo
                   </button>
                 </div>
 
-                {/* Right — screenshot */}
-                <div className="flex items-center justify-center p-4 sm:p-6 lg:p-8">
+                {/* Right — screenshot (more space) */}
+                <div className="flex items-center justify-center p-5 sm:p-6 lg:p-8">
                   <div
                     className="w-full rounded-xl p-[2px] sm:rounded-2xl"
                     style={{
@@ -434,24 +476,39 @@ export default function Home() {
               </div>
             </div>
           ))}
+
+            {/* Carousel dots */}
+            <div className="mt-8 flex justify-center gap-2">
+              {platformFeatures.map(({ id }) => (
+                <button
+                  key={id}
+                  onClick={() => goToFeature(id)}
+                  className={`h-2 rounded-full transition-all sm:h-2.5 ${
+                    activeFeature === id
+                      ? "w-6 bg-primary sm:w-8"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50 sm:w-2.5"
+                  }`}
+                  aria-label={`Go to feature ${id}`}
+                  aria-current={activeFeature === id ? "true" : undefined}
+                />
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* ── Classroom Tools ── */}
-        <section id="sections-tools" className="mt-4 overflow-hidden rounded-2xl bg-slate-950 px-4 py-8 text-white shadow-xl sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
-          <div className="relative z-10 space-y-8 sm:space-y-10">
-            <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-10">
-              <div className="space-y-3">
+        <section id="sections-tools" className="mt-10 overflow-hidden rounded-2xl bg-slate-950 px-6 py-10 text-white shadow-xl sm:mt-14 sm:rounded-3xl sm:px-10 sm:py-14 lg:mt-20 lg:px-14 lg:py-16">
+          <div className="relative z-10 space-y-10 sm:space-y-12">
+            <div className="grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
+              <div className="space-y-4">
                 <span className="inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/30">
                   Classroom Tools
                 </span>
                 <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                   Built for interactive digital classrooms
                 </h2>
-                <p className="text-sm text-slate-400 sm:text-base lg:text-lg">
-                  Every lesson becomes more visual, interactive, and engaging — especially on smartboards and digital panels.
-                </p>
-                <p className="text-sm text-slate-500">
-                  Teachers interact with content live — no switching apps, no preparation delays.
+                <p className="max-w-md text-sm text-slate-400">
+                  Visual, interactive lessons on smartboards — no app switching, no prep delays.
                 </p>
               </div>
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl ring-1 ring-white/10 sm:rounded-2xl">
@@ -465,14 +522,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
               {tools.map(({ icon: Icon, title, body }) => (
-                <div key={title} className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10 transition-colors hover:bg-white/8 sm:rounded-2xl sm:p-5">
-                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20">
-                    <Icon className="h-4 w-4 text-primary" />
+                <div key={title} className="rounded-xl bg-white/5 p-5 ring-1 ring-white/10 transition-colors hover:bg-white/8 sm:rounded-2xl sm:p-6">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20">
+                    <Icon className="h-5 w-5 text-primary" />
                   </div>
                   <p className="text-sm font-semibold">{title}</p>
-                  <p className="mt-1.5 text-xs text-slate-400 sm:text-sm">{body}</p>
+                  <p className="mt-2 text-xs text-slate-400">{body}</p>
                 </div>
               ))}
             </div>
@@ -480,15 +537,15 @@ export default function Home() {
         </section>
 
         {/* ── Why Institutes Choose ── */}
-        <section className="mt-4 space-y-6 sm:mt-6 sm:space-y-8 lg:mt-10">
-          <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-10">
-            <div className="space-y-4">
+        <section className="mt-10 space-y-10 sm:mt-14 sm:space-y-12 lg:mt-20">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-14">
+            <div className="space-y-5">
               <SectionLabel>Why Choose Us</SectionLabel>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 Why institutes choose Click &amp; Teach
               </h2>
-              <p className="text-sm text-muted-foreground sm:text-base lg:text-lg">
-                Consistent, high-quality digital teaching across every classroom and faculty member.
+              <p className="max-w-md text-sm text-muted-foreground">
+                Consistent, high-quality digital teaching — every classroom, every teacher.
               </p>
               <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md">
                 Book a Demo for Your Institute
@@ -505,46 +562,41 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {benefits.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="rounded-xl bg-card p-4 shadow-sm ring-1 ring-border/70 transition-shadow hover:shadow-md sm:rounded-2xl sm:p-5">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-                  <Icon className="h-4 w-4 text-primary" />
+              <div key={title} className="rounded-xl bg-card p-5 shadow-sm ring-1 ring-border/70 transition-shadow hover:shadow-md sm:rounded-2xl sm:p-6">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <p className="text-sm font-semibold">{title}</p>
-                <p className="mt-1.5 text-xs text-muted-foreground sm:text-sm">{body}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{body}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* ── For Institutes & Educators ── */}
-        <section id="sections-roles" className="mt-4 rounded-2xl bg-card px-4 py-8 shadow-sm ring-1 ring-border/70 sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-start lg:gap-10">
-            <div className="space-y-3 sm:space-y-4">
+        <section id="sections-roles" className="mt-10 rounded-2xl bg-card px-6 py-10 shadow-sm ring-1 ring-border/70 sm:mt-14 sm:rounded-3xl sm:px-10 sm:py-14 lg:mt-20 lg:px-14 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-start lg:gap-14">
+            <div className="space-y-4">
               <SectionLabel>For Institutes</SectionLabel>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 Built for institutes &amp; educators
               </h2>
-              <p className="text-sm text-muted-foreground sm:text-base">
-                Designed for both classroom teachers and institute management — from a single platform.
+              <p className="max-w-sm text-sm text-muted-foreground">
+                Teachers and management — one platform.
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-              <div className="rounded-xl bg-primary/5 p-4 ring-1 ring-primary/15 sm:rounded-2xl sm:p-6">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/15">
-                  <BookOpen className="h-4 w-4 text-primary" />
+            <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+              <div className="rounded-xl bg-primary/5 p-5 ring-1 ring-primary/15 sm:rounded-2xl sm:p-6">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15">
+                  <BookOpen className="h-5 w-5 text-primary" />
                 </div>
                 <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">For Teachers</p>
-                <h3 className="mt-2 text-base font-semibold">Everything ready before class starts</h3>
-                <ul className="mt-3 space-y-2 text-sm text-muted-foreground sm:mt-4 sm:space-y-2.5">
-                  {[
-                    "Centralized content library for every chapter.",
-                    "Ready lecture material — PPTs, diagrams, and more.",
-                    "One-click teaching mode for hassle-free classes.",
-                    "Classroom-ready tools for annotations, zoom, and rotate.",
-                  ].map((item) => (
+                <h3 className="mt-2 text-base font-semibold">Ready before class</h3>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {["Content library per chapter", "Ready PPTs, diagrams, more", "One-click teaching mode", "Annotate, zoom, rotate"].map((item) => (
                     <li key={item} className="flex items-start gap-2.5">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                       {item}
@@ -553,19 +605,14 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="rounded-xl bg-secondary p-4 ring-1 ring-border/70 sm:rounded-2xl sm:p-6">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-muted">
-                  <Settings2 className="h-4 w-4 text-muted-foreground" />
+              <div className="rounded-xl bg-secondary p-5 ring-1 ring-border/70 sm:rounded-2xl sm:p-6">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
+                  <Settings2 className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">For Admin</p>
-                <h3 className="mt-2 text-base font-semibold">Control, visibility, and customization</h3>
-                <ul className="mt-3 space-y-2 text-sm text-muted-foreground sm:mt-4 sm:space-y-2.5">
-                  {[
-                    "User and content access control across branches.",
-                    "Secure, centralized content management.",
-                    "Teacher activity logs and usage reports.",
-                    "Institute-level customization and branding.",
-                  ].map((item) => (
+                <h3 className="mt-2 text-base font-semibold">Control & visibility</h3>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {["Access control across branches", "Central content management", "Activity logs & reports", "Customization & branding"].map((item) => (
                     <li key={item} className="flex items-start gap-2.5">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground" />
                       {item}
@@ -578,17 +625,17 @@ export default function Home() {
         </section>
 
         {/* ── Future Ready ── */}
-        <section className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 px-4 py-8 text-white shadow-xl sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-start lg:gap-10">
-            <div className="space-y-4">
+        <section className="mt-10 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 px-6 py-10 text-white shadow-xl sm:mt-14 sm:rounded-3xl sm:px-10 sm:py-14 lg:mt-20 lg:px-14 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-start lg:gap-14">
+            <div className="space-y-5">
               <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/70 ring-1 ring-white/20">
                 Future-Ready
               </span>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 Future-ready teaching
               </h2>
-              <p className="text-sm text-slate-400 sm:text-base">
-                Education is moving fast. Click &amp; Teach helps institutes lead the shift — not lag behind it.
+              <p className="max-w-sm text-sm text-slate-400">
+                Lead the shift — not lag behind.
               </p>
               <div className="flex flex-wrap gap-3 pt-1">
                 <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 hover:shadow-md">
@@ -600,13 +647,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="space-y-3 sm:space-y-4">
+            <div className="space-y-4">
               {[
-                { from: "Chalkboards",        to: "Smart Classrooms", body: "From static, text-heavy teaching to visual, interactive lessons on digital panels." },
-                { from: "Memorization",       to: "Visualization",    body: "From rote learning to animations, simulations, and concept-first understanding." },
-                { from: "Manual Preparation", to: "Digital Efficiency",body: "From hours of slide-making to ready-to-use content accessible in one click." },
+                { from: "Chalkboards",        to: "Smart Classrooms", body: "Visual, interactive lessons on digital panels." },
+                { from: "Memorization",       to: "Visualization",    body: "Animations, simulations, concept-first understanding." },
+                { from: "Manual Prep",       to: "One-Click Content", body: "Ready-to-use content, no slide-making." },
               ].map((row) => (
-                <div key={row.from} className="flex flex-col gap-2 rounded-xl bg-white/5 p-4 ring-1 ring-white/10 sm:flex-row sm:items-start sm:gap-4 sm:rounded-2xl sm:p-5">
+                <div key={row.from} className="flex flex-col gap-2 rounded-xl bg-white/5 p-5 ring-1 ring-white/10 sm:flex-row sm:items-center sm:gap-5 sm:rounded-2xl">
                   <div className="flex shrink-0 flex-wrap items-center gap-2 text-xs font-semibold">
                     <span className="rounded-md bg-white/10 px-2.5 py-1 text-slate-400">{row.from}</span>
                     <span className="text-slate-600">→</span>
@@ -620,15 +667,15 @@ export default function Home() {
         </section>
 
         {/* ── FAQ ── */}
-        <section id="sections-faq" className="mt-4 rounded-2xl bg-card px-4 py-8 shadow-sm ring-1 ring-border/70 sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-10">
-            <div className="space-y-4">
+        <section id="sections-faq" className="mt-10 rounded-2xl bg-card px-6 py-10 shadow-sm ring-1 ring-border/70 sm:mt-14 sm:rounded-3xl sm:px-10 sm:py-14 lg:mt-20 lg:px-14 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-14">
+            <div className="space-y-5">
               <SectionLabel>FAQ</SectionLabel>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 Frequently asked questions
               </h2>
-              <p className="text-sm text-muted-foreground sm:text-base">
-                Quick answers about Click &amp; Teach. Still have questions? Our team is here.
+              <p className="max-w-sm text-sm text-muted-foreground">
+                Quick answers. Questions? Our team is here.
               </p>
               <div className="flex flex-wrap gap-3 pt-1">
                 <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm">
@@ -640,7 +687,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {faqItems.map((item) => {
                 const isOpen = openFaq === item.question;
                 return (
@@ -648,7 +695,7 @@ export default function Home() {
                     key={item.question}
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : item.question)}
-                    className="flex w-full flex-col items-stretch rounded-xl bg-background px-4 py-3.5 text-left shadow-sm ring-1 ring-border/70 transition-all hover:ring-border sm:rounded-2xl sm:px-5 sm:py-4"
+                    className="flex w-full flex-col items-stretch rounded-xl bg-background px-4 py-4 text-left shadow-sm ring-1 ring-border/70 transition-all hover:ring-border sm:rounded-2xl sm:px-5 sm:py-5"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <span className="text-sm font-medium">{item.question}</span>
@@ -668,18 +715,18 @@ export default function Home() {
         </section>
 
         {/* ── Final CTA ── */}
-        <section id="contact-section" className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-r from-primary via-indigo-600 to-sky-500 p-px shadow-2xl sm:mt-6 sm:rounded-3xl lg:mt-10">
-          <div className="rounded-[calc(1rem-1px)] bg-slate-950 px-4 py-10 text-center text-white sm:rounded-[calc(1.4rem-1px)] sm:px-10 sm:py-16 lg:px-20">
+        <section id="contact-section" className="mt-10 overflow-hidden rounded-2xl bg-gradient-to-r from-primary via-indigo-600 to-sky-500 p-px shadow-2xl sm:mt-14 sm:rounded-3xl lg:mt-20">
+          <div className="rounded-[calc(1rem-1px)] bg-slate-950 px-6 py-12 text-center text-white sm:rounded-[calc(1.4rem-1px)] sm:px-12 sm:py-20 lg:px-24 lg:py-24">
             <span className="inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/30">
               Get Started Today
             </span>
-            <h2 className="mt-4 text-2xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            <h2 className="mt-5 text-2xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
               Ready to upgrade your classrooms?
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400 sm:text-base">
-              See how Click &amp; Teach can standardize teaching quality and make every STEM class more engaging — in just one demo.
+            <p className="mx-auto mt-4 max-w-md text-sm text-slate-400">
+              One demo — see how we standardize quality and make every STEM class more engaging.
             </p>
-            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row">
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5">
                 Book a Demo
               </button>
@@ -698,7 +745,7 @@ export default function Home() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-border/60 bg-background">
-        <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6 lg:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-8 lg:px-10">
           <div className="flex items-center gap-2">
             <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-[10px] font-bold text-primary-foreground">CT</div>
             <span className="font-medium text-foreground">Click &amp; Teach</span>
