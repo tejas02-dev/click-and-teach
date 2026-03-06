@@ -46,17 +46,6 @@ const benefits = [
   { icon: BarChart3, title: "Better outcomes",            body: "Visual and simulation-based learning leads to stronger concept clarity and exam performance." },
 ];
 
-const resourceCards = [
-  { icon: Presentation, n: "1,000+",  l: "PPT Presentations",   bg: "bg-primary/10",      ring: "ring-primary/20",     text: "text-primary"     },
-  { icon: Network,      n: "15,000+", l: "Diagrams",             bg: "bg-sky-500/10",      ring: "ring-sky-500/20",     text: "text-sky-600"     },
-  { icon: Film,         n: "5,000+",  l: "Animations",           bg: "bg-indigo-500/10",   ring: "ring-indigo-500/20",  text: "text-indigo-600"  },
-  { icon: FlaskConical, n: "1,000+",  l: "Simulations",          bg: "bg-violet-500/10",   ring: "ring-violet-500/20",  text: "text-violet-600"  },
-  { icon: CircleHelp,   n: "15,000+", l: "MCQs",                 bg: "bg-emerald-500/10",  ring: "ring-emerald-500/20", text: "text-emerald-600" },
-  { icon: History,      n: "10,000+", l: "Prev Year Questions",  bg: "bg-amber-500/10",    ring: "ring-amber-500/20",   text: "text-amber-600"   },
-  { icon: Bookmark,     n: "10,000+", l: "Important Questions",  bg: "bg-rose-500/10",     ring: "ring-rose-500/20",    text: "text-rose-600"    },
-  { icon: ClipboardList,n: "10,000+", l: "Assignments",          bg: "bg-teal-500/10",     ring: "ring-teal-500/20",    text: "text-teal-600"    },
-];
-
 const faqItems = [
   { question: "What subjects and grades does Click & Teach cover?",         answer: "Click & Teach is focused on STEM subjects for grades 8–12, with chapter-wise and topic-wise content aligned to common curricula. Additional subjects can be discussed based on your institute's requirements." },
   { question: "Do teachers still need to prepare their own presentations?",  answer: "In most cases, no. Click & Teach provides ready-to-use PPTs, diagrams, animations, simulations, and assessments. Teachers can customize or add their own material if they prefer, but they no longer need to build everything from scratch." },
@@ -71,38 +60,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
       {children}
     </span>
-  );
-}
-
-const glowBorderClass =
-  "rounded-xl sm:rounded-2xl p-[2px] bg-gradient-to-r from-primary/80 via-indigo-500/70 to-sky-500/80 shadow-[0_0_30px_rgba(99,102,241,0.25)] sm:shadow-[0_0_40px_rgba(99,102,241,0.3)]";
-
-function GlowImage({
-  src,
-  alt,
-  caption,
-  className = "",
-}: {
-  src: string;
-  alt: string;
-  caption?: string;
-  className?: string;
-}) {
-  return (
-    <div className={`${glowBorderClass} ${className}`}>
-      <div className="relative aspect-video w-full overflow-hidden rounded-[calc(0.75rem-2px)] sm:rounded-[calc(1rem-2px)] bg-slate-900">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-      {caption && (
-        <p className="mt-2 text-center text-xs font-medium text-muted-foreground sm:text-sm">{caption}</p>
-      )}
-    </div>
   );
 }
 
@@ -193,15 +150,14 @@ export default function Home() {
       {/* ── Header ── */}
       <header className="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground shadow-md sm:h-9 sm:w-9 sm:text-sm">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-md sm:h-10 sm:w-10">
               CT
             </div>
-            <span className="text-sm font-semibold text-white">Click &amp; Teach</span>
+            <span className="text-base font-bold tracking-tight text-white sm:text-lg">Click &amp; Teach</span>
           </div>
           <nav className="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
             <button onClick={() => scrollToId("sections-features")} className="transition-colors hover:text-white">Features</button>
-            <button onClick={() => scrollToId("sections-platform")}  className="transition-colors hover:text-white">Platform</button>
             <button onClick={() => scrollToId("sections-tools")}    className="transition-colors hover:text-white">Tools</button>
             <button onClick={() => scrollToId("sections-roles")}    className="transition-colors hover:text-white">For Institutes</button>
             <button onClick={() => scrollToId("sections-faq")}      className="transition-colors hover:text-white">FAQ</button>
@@ -217,6 +173,57 @@ export default function Home() {
         </div>
       </header>
 
+      {/* ── Stats Splash ── */}
+      <section className="relative overflow-hidden bg-slate-950 pb-16 pt-16 text-white sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-28">
+        <div className="pointer-events-none absolute inset-0 -z-0">
+          <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+          <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-indigo-600/10 blur-[80px]" />
+          <div className="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-sky-500/10 blur-[80px]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          {/* Eyebrow */}
+          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-primary sm:mb-4">
+            40,000+ Ready Resources · STEM (8th – 12th)
+          </p>
+
+          {/* Brand title */}
+          <h1 className="mb-8 text-center text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+            <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+              Click &amp; Teach
+            </span>
+          </h1>
+
+          {/* Big stat grid */}
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:gap-5">
+            {[
+              { n: "1,000+",   label: "PPTs",              icon: Presentation,  accent: "from-primary/80 to-indigo-500/80",   glow: "rgba(99,102,241,0.35)" },
+              { n: "15,000+",  label: "Diagrams",          icon: Network,       accent: "from-sky-500/80 to-cyan-500/80",     glow: "rgba(14,165,233,0.3)"  },
+              { n: "5,000+",   label: "Animations",        icon: Film,          accent: "from-violet-500/80 to-purple-500/80",glow: "rgba(139,92,246,0.3)"  },
+              { n: "1,000+",   label: "Simulations",       icon: FlaskConical,  accent: "from-emerald-500/80 to-teal-500/80", glow: "rgba(16,185,129,0.3)"  },
+              { n: "15,000+",  label: "MCQs",              icon: CircleHelp,    accent: "from-amber-500/80 to-orange-500/80", glow: "rgba(245,158,11,0.3)"  },
+              { n: "10,000+",  label: "Prev Year Qs",      icon: History,       accent: "from-rose-500/80 to-pink-500/80",    glow: "rgba(244,63,94,0.3)"   },
+              { n: "10,000+",  label: "Important Qs",      icon: Star,          accent: "from-yellow-400/80 to-amber-500/80", glow: "rgba(234,179,8,0.3)"   },
+              { n: "10,000+",  label: "Assignments",       icon: ClipboardList, accent: "from-teal-500/80 to-green-500/80",   glow: "rgba(20,184,166,0.3)"  },
+            ].map(({ n, label, icon: Icon, accent, glow }) => (
+              <div
+                key={label}
+                className="group relative overflow-hidden rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-all duration-300 hover:bg-white/8 hover:ring-white/20 sm:rounded-3xl sm:p-6 lg:p-7"
+                style={{ boxShadow: `0 4px 30px ${glow.replace("0.3", "0.08")}` }}
+              >
+                <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${accent} shadow-lg sm:mb-4 sm:h-12 sm:w-12 sm:rounded-2xl`}
+                  style={{ boxShadow: `0 6px 20px ${glow}` }}>
+                  <Icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+                </div>
+                <p className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">{n}</p>
+                <p className="mt-1 text-xs font-medium text-slate-400 sm:text-sm">{label}</p>
+                <div className={`pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gradient-to-br ${accent} opacity-10 blur-2xl transition-opacity group-hover:opacity-20`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── HERO ── */}
       <section className="relative overflow-hidden bg-slate-950 pb-0 pt-12 text-white sm:pt-16 lg:pt-24">
         <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[500px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px] sm:h-96 sm:w-[700px] sm:blur-[120px]" />
@@ -230,7 +237,7 @@ export default function Home() {
             STEM (8–12) · 40,000+ Ready Resources
           </p>
           <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            The Digital Teaching Platform
+            Teaching Platform
             <br />
             <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
               Built for STEM Educators
@@ -248,32 +255,13 @@ export default function Home() {
               Book a Demo
             </button>
             <button
-              onClick={() => scrollToId("sections-platform")}
+              onClick={() => scrollToId("sections-features")}
               className="w-full rounded-full border border-slate-600 px-7 py-3 text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto"
             >
-              Explore the Platform
+              Explore Features
             </button>
           </div>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
-            {[
-              "1,000+ PPTs",
-              "15,000+ Diagrams",
-              "5,000+ Animations",
-              "1,000+ Simulations",
-              "15,000+ MCQs",
-              "10,000+ Prev Year Qs",
-              "10,000+ Important Qs",
-              "10,000+ Assignments",
-            ].map((label) => (
-              <span
-                key={label}
-                className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-300 shadow-sm backdrop-blur sm:text-sm"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-          <p className="mt-4 text-xs text-slate-500">Trusted by STEM institutes across India · No credit card required</p>
+          <p className="mt-5 text-xs text-slate-500">Trusted by STEM institutes across India · No credit card required</p>
         </div>
 
         {/* Hero mockup — product UI preview */}
@@ -448,53 +436,10 @@ export default function Home() {
           ))}
         </section>
 
-        {/* ── Content Library ── */}
-        <section id="sections-platform" className="mt-4 rounded-2xl bg-card px-4 py-8 shadow-sm ring-1 ring-border/70 sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
-            <div className="space-y-4 sm:space-y-5">
-              <SectionLabel>Content Library</SectionLabel>
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
-                Everything teachers need —<br className="hidden sm:block" /> in one platform
-              </h2>
-              <p className="text-sm text-muted-foreground sm:text-base lg:text-lg">
-                Click &amp; Teach combines powerful teaching software with a massive, curriculum-aligned content library. No more searching the internet or building slides from scratch.
-              </p>
-              <ul className="space-y-2.5 text-sm text-muted-foreground">
-                {[
-                  "Ready-made content library for every chapter and topic.",
-                  "Instant access to everything during live lectures.",
-                  "Consistent structure across all grades and subjects.",
-                  "All content organized chapter-wise and topic-wise.",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-primary/10 text-center text-[10px] font-bold leading-5 text-primary">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md">
-                Book a Demo
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {resourceCards.map(({ icon: Icon, n, l, bg, ring, text }) => (
-                <div key={l} className={`rounded-xl p-3 ring-1 sm:rounded-2xl sm:p-4 ${bg} ${ring}`}>
-                  <div className={`mb-2 flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8 ${bg}`}>
-                    <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${text}`} />
-                  </div>
-                  <p className={`text-xl font-bold sm:text-2xl ${text}`}>{n}</p>
-                  <p className="mt-0.5 text-[11px] font-medium text-muted-foreground sm:text-xs">{l}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── Classroom Tools ── */}
         <section id="sections-tools" className="mt-4 overflow-hidden rounded-2xl bg-slate-950 px-4 py-8 text-white shadow-xl sm:mt-6 sm:rounded-3xl sm:px-8 sm:py-12 lg:mt-10 lg:px-14">
           <div className="relative z-10 space-y-8 sm:space-y-10">
-            <div className="grid gap-3 lg:grid-cols-2 lg:items-end lg:gap-4">
+            <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-10">
               <div className="space-y-3">
                 <span className="inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/30">
                   Classroom Tools
@@ -505,10 +450,19 @@ export default function Home() {
                 <p className="text-sm text-slate-400 sm:text-base lg:text-lg">
                   Every lesson becomes more visual, interactive, and engaging — especially on smartboards and digital panels.
                 </p>
+                <p className="text-sm text-slate-500">
+                  Teachers interact with content live — no switching apps, no preparation delays.
+                </p>
               </div>
-              <p className="text-sm text-slate-500 lg:text-right">
-                Teachers interact with content live — no switching apps, no preparation delays.
-              </p>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl ring-1 ring-white/10 sm:rounded-2xl">
+                <Image
+                  src="/Classroom-Tools.jpeg"
+                  alt="Educator with tablet and digital teaching tools — data, presentations, and ideas for STEM classrooms"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
@@ -527,8 +481,8 @@ export default function Home() {
 
         {/* ── Why Institutes Choose ── */}
         <section className="mt-4 space-y-6 sm:mt-6 sm:space-y-8 lg:mt-10">
-          <div className="grid gap-4 lg:grid-cols-2 lg:items-end">
-            <div className="space-y-3">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-10">
+            <div className="space-y-4">
               <SectionLabel>Why Choose Us</SectionLabel>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 Why institutes choose Click &amp; Teach
@@ -536,11 +490,18 @@ export default function Home() {
               <p className="text-sm text-muted-foreground sm:text-base lg:text-lg">
                 Consistent, high-quality digital teaching across every classroom and faculty member.
               </p>
-            </div>
-            <div className="lg:text-right">
               <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md">
                 Book a Demo for Your Institute
               </button>
+            </div>
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-muted shadow-lg ring-1 ring-border/70 sm:rounded-2xl">
+              <Image
+                src="/Classroom.jpeg"
+                alt="Teacher presenting at an interactive smartboard with STEM graphics — modern digital classroom"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
           </div>
 
