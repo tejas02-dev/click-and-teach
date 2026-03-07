@@ -197,11 +197,11 @@ export default function Home() {
       </header>
 
       {/* ── Stats Splash ── */}
-      <section className="relative overflow-hidden bg-slate-950 pb-20 pt-20 text-white sm:pb-24 sm:pt-24 lg:pb-28 lg:pt-32">
+      <section className="relative overflow-hidden bg-white pb-20 pt-20 text-foreground sm:pb-24 sm:pt-24 lg:pb-28 lg:pt-32">
         <div className="pointer-events-none absolute inset-0 -z-0">
-          <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
-          <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-indigo-600/10 blur-[80px]" />
-          <div className="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-sky-500/10 blur-[80px]" />
+          <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px]" />
+          <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-indigo-500/5 blur-[80px]" />
+          <div className="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-sky-500/5 blur-[80px]" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
@@ -212,7 +212,7 @@ export default function Home() {
 
           {/* Brand title */}
           <h1 className="mb-10 text-center text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-            <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-sky-500 to-indigo-500 bg-clip-text text-transparent">
               Click &amp; Teach
             </span>
           </h1>
@@ -220,27 +220,27 @@ export default function Home() {
           {/* Big stat grid */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
             {[
-              { n: "1,000+",   label: "PPTs",              icon: Presentation,  accent: "from-primary/80 to-indigo-500/80",   glow: "rgba(99,102,241,0.35)" },
-              { n: "15,000+",  label: "Diagrams",          icon: Network,       accent: "from-sky-500/80 to-cyan-500/80",     glow: "rgba(14,165,233,0.3)"  },
-              { n: "5,000+",   label: "Animations",        icon: Film,          accent: "from-violet-500/80 to-purple-500/80",glow: "rgba(139,92,246,0.3)"  },
-              { n: "1,000+",   label: "Simulations",       icon: FlaskConical,  accent: "from-emerald-500/80 to-teal-500/80", glow: "rgba(16,185,129,0.3)"  },
-              { n: "15,000+",  label: "MCQs",              icon: CircleHelp,    accent: "from-amber-500/80 to-orange-500/80", glow: "rgba(245,158,11,0.3)"  },
-              { n: "10,000+",  label: "Prev Year Qs",      icon: History,       accent: "from-rose-500/80 to-pink-500/80",    glow: "rgba(244,63,94,0.3)"   },
-              { n: "10,000+",  label: "Important Qs",      icon: Star,          accent: "from-yellow-400/80 to-amber-500/80", glow: "rgba(234,179,8,0.3)"   },
-              { n: "10,000+",  label: "Assignments",       icon: ClipboardList, accent: "from-teal-500/80 to-green-500/80",   glow: "rgba(20,184,166,0.3)"  },
-            ].map(({ n, label, icon: Icon, accent, glow }) => (
+              { n: "1,000+",   label: "PPTs",              icon: Presentation,  accent: "from-primary/80 to-indigo-500/80",   glow: "rgba(99,102,241,0.35)", bg: "bg-indigo-50",      text: "text-indigo-800", border: "border-indigo-200" },
+              { n: "15,000+",  label: "Diagrams",          icon: Network,       accent: "from-sky-500/80 to-cyan-500/80",     glow: "rgba(14,165,233,0.3)",  bg: "bg-sky-50",        text: "text-sky-800",   border: "border-sky-200" },
+              { n: "5,000+",   label: "Animations",        icon: Film,          accent: "from-violet-500/80 to-purple-500/80",glow: "rgba(139,92,246,0.3)",  bg: "bg-violet-50",     text: "text-violet-800", border: "border-violet-200" },
+              { n: "1,000+",   label: "Simulations",       icon: FlaskConical,  accent: "from-emerald-500/80 to-teal-500/80", glow: "rgba(16,185,129,0.3)",  bg: "bg-emerald-50",    text: "text-emerald-800", border: "border-emerald-200" },
+              { n: "15,000+",  label: "MCQs",              icon: CircleHelp,    accent: "from-amber-500/80 to-orange-500/80", glow: "rgba(245,158,11,0.3)",  bg: "bg-amber-50",      text: "text-amber-800",  border: "border-amber-200" },
+              { n: "10,000+",  label: "Prev Year Qs",      icon: History,       accent: "from-rose-500/80 to-pink-500/80",    glow: "rgba(244,63,94,0.3)",   bg: "bg-rose-50",       text: "text-rose-800",  border: "border-rose-200" },
+              { n: "10,000+",  label: "Important Qs",      icon: Star,          accent: "from-yellow-400/80 to-amber-500/80", glow: "rgba(234,179,8,0.3)",   bg: "bg-amber-50",      text: "text-amber-900",  border: "border-amber-300" },
+              { n: "10,000+",  label: "Assignments",       icon: ClipboardList, accent: "from-teal-500/80 to-green-500/80",   glow: "rgba(20,184,166,0.3)",  bg: "bg-teal-50",       text: "text-teal-800",   border: "border-teal-200" },
+            ].map(({ n, label, icon: Icon, accent, glow, bg, text, border }) => (
               <div
                 key={label}
-                className="group relative overflow-hidden rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-all duration-300 hover:bg-white/8 hover:ring-white/20 sm:rounded-3xl sm:p-6 lg:p-7"
-                style={{ boxShadow: `0 4px 30px ${glow.replace("0.3", "0.08")}` }}
+                className={`group relative overflow-hidden rounded-2xl border ${border} ${bg} p-4 shadow-sm transition-all duration-300 hover:shadow-md sm:rounded-3xl sm:p-6 lg:p-7`}
+                style={{ boxShadow: `0 2px 12px ${glow.replace("0.3", "0.06").replace("0.35", "0.07")}` }}
               >
                 <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${accent} shadow-lg sm:mb-4 sm:h-12 sm:w-12 sm:rounded-2xl`}
                   style={{ boxShadow: `0 6px 20px ${glow}` }}>
                   <Icon className="h-4 w-4 text-white sm:h-5 sm:w-5" />
                 </div>
-                <p className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">{n}</p>
-                <p className="mt-1 text-xs font-medium text-slate-400 sm:text-sm">{label}</p>
-                <div className={`pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gradient-to-br ${accent} opacity-10 blur-2xl transition-opacity group-hover:opacity-20`} />
+                <p className={`text-2xl font-extrabold tracking-tight ${text} sm:text-3xl lg:text-4xl`}>{n}</p>
+                <p className={`mt-1 text-xs font-medium ${text} opacity-90 sm:text-sm`}>{label}</p>
+                <div className={`pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gradient-to-br ${accent} opacity-10 blur-2xl transition-opacity group-hover:opacity-15`} />
               </div>
             ))}
           </div>
