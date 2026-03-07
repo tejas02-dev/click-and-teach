@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Footer } from "@/components/Footer";
 import {
   Monitor,
   BookOpen,
@@ -186,9 +188,9 @@ export default function Home() {
             <button onClick={() => scrollToId("sections-faq")}      className="transition-colors hover:text-white">FAQ</button>
           </nav>
           <div className="flex items-center gap-2 sm:gap-3">
-            <button onClick={() => scrollToId("contact-section")} className="hidden rounded-full border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:inline-flex">
+            <Link href="/contact" className="hidden rounded-full border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:inline-flex">
               Talk to Sales
-            </button>
+            </Link>
             <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 sm:px-5 sm:text-sm">
               Book a Demo
             </button>
@@ -248,10 +250,10 @@ export default function Home() {
       </section>
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden bg-slate-950 pb-0 pt-16 text-white sm:pt-20 lg:pt-28">
-        <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[500px] -translate-x-1/2 rounded-full bg-primary/20 blur-[100px] sm:h-96 sm:w-[700px] sm:blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 left-1/4 -z-0 h-48 w-72 rounded-full bg-indigo-500/10 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
-        <div className="pointer-events-none absolute bottom-0 right-1/4 -z-0 h-48 w-72 rounded-full bg-sky-400/10 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
+      <section className="relative overflow-hidden bg-white pb-0 pt-16 text-foreground sm:pt-20 lg:pt-28">
+        <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[500px] -translate-x-1/2 rounded-full bg-primary/10 blur-[100px] sm:h-96 sm:w-[700px] sm:blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 left-1/4 -z-0 h-48 w-72 rounded-full bg-indigo-500/5 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 right-1/4 -z-0 h-48 w-72 rounded-full bg-sky-400/5 blur-[80px] sm:h-64 sm:w-96 sm:blur-[100px]" />
 
         {/* centered text */}
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
@@ -262,11 +264,11 @@ export default function Home() {
           <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
             Teaching Platform
             <br />
-            <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-sky-500 to-indigo-500 bg-clip-text text-transparent">
               Built for STEM Educators
             </span>
           </h1>
-          <p className="mx-auto mt-5 max-w-lg px-2 text-sm text-slate-400 sm:mt-6 sm:px-0">
+          <p className="mx-auto mt-5 max-w-lg px-2 text-sm text-slate-600 sm:mt-6 sm:px-0">
             Ready-to-use STEM content — chapter-wise, one click on your smartboard.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row">
@@ -279,7 +281,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => scrollToId("sections-features")}
-              className="w-full rounded-full border border-slate-600 px-7 py-3 text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto"
+              className="w-full rounded-full border border-slate-300 px-7 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 sm:w-auto"
             >
               Explore Features
             </button>
@@ -289,7 +291,7 @@ export default function Home() {
 
         {/* Hero mockup — product UI preview */}
         <div className="relative z-10 mx-auto mt-14 max-w-5xl px-4 sm:mt-20 sm:px-6">
-          <div className="overflow-hidden rounded-t-xl shadow-2xl ring-1 ring-white/10 sm:rounded-t-2xl">
+          <div className="overflow-hidden rounded-t-xl shadow-2xl ring-1 ring-slate-200/80 sm:rounded-t-2xl">
             <div className="flex items-center gap-1.5 bg-slate-800/90 px-3 py-2.5 sm:px-4 sm:py-3">
               <span className="h-2 w-2 rounded-full bg-red-500/70 sm:h-2.5 sm:w-2.5" />
               <span className="h-2 w-2 rounded-full bg-yellow-500/70 sm:h-2.5 sm:w-2.5" />
@@ -641,9 +643,9 @@ export default function Home() {
                 <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 hover:shadow-md">
                   Book a Demo
                 </button>
-                <button onClick={() => scrollToId("contact-section")} className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10">
+                <Link href="/contact" className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 sm:inline-flex sm:items-center sm:justify-center">
                   Contact Sales
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -681,9 +683,9 @@ export default function Home() {
                 <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm">
                   Book a Demo
                 </button>
-                <button onClick={() => scrollToId("contact-section")} className="rounded-full border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary">
+                <Link href="/contact" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary sm:inline-flex sm:items-center sm:justify-center">
                   Contact Sales
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -727,12 +729,12 @@ export default function Home() {
               One demo — see how we standardize quality and make every STEM class more engaging.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5">
+              <button onClick={() => scrollToId("contact-section")} className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5">
                 Book a Demo
               </button>
-              <button className="w-full rounded-full border border-slate-600 px-8 py-3 text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto sm:py-3.5">
+              <Link href="/contact" className="w-full rounded-full border border-slate-600 px-8 py-3 text-center text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto sm:py-3.5">
                 Talk to Sales
-              </button>
+              </Link>
             </div>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 sm:gap-6">
               <span>✓ No credit card required</span>
@@ -743,17 +745,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-border/60 bg-background">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-8 lg:px-10">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-[10px] font-bold text-primary-foreground">CT</div>
-            <span className="font-medium text-foreground">Click &amp; Teach</span>
-            <span>· Digital Teaching Platform</span>
-          </div>
-          <p>© {new Date().getFullYear()} Click &amp; Teach. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
