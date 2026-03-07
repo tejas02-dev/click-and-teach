@@ -265,7 +265,7 @@ export default function Home() {
             Teaching Platform
             <br />
             <span className="bg-gradient-to-r from-primary via-sky-500 to-indigo-500 bg-clip-text text-transparent">
-              Built for STEM Educators
+            Built to teach STEM Educators 
             </span>
           </h1>
           <p className="mx-auto mt-5 max-w-lg px-2 text-sm text-slate-600 sm:mt-6 sm:px-0">
