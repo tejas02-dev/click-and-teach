@@ -59,6 +59,8 @@ const faqItems = [
   { question: "How can we see a live demo?",                                 answer: "You can book a personalized demo using the Book a Demo buttons on this page. Our team will walk you through the platform, answer questions, and discuss the best rollout plan for your institute." },
 ];
 
+const CALENDLY_DEMO_URL = "https://calendly.com/addonsidigital/dttdemo";
+
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
@@ -176,10 +178,11 @@ export default function Home() {
       <header className="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-md sm:h-10 sm:w-10">
+            {/* <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-md sm:h-10 sm:w-10">
               CT
-            </div>
-            <span className="text-base font-bold tracking-tight text-white sm:text-lg">Click &amp; Teach</span>
+            </div> */}
+            <Image src="/click-and-teach-logo.png" alt="Click & Teach Logo" width={150} height={100} />
+            {/* <span className="text-base font-bold tracking-tight text-white sm:text-lg">Click &amp; Teach</span> */}
           </div>
           <nav className="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
             <button onClick={() => scrollToId("sections-features")} className="transition-colors hover:text-white">Features</button>
@@ -191,9 +194,14 @@ export default function Home() {
             <Link href="/contact" className="hidden rounded-full border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:inline-flex">
               Talk to Sales
             </Link>
-            <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 sm:px-5 sm:text-sm">
+            <Link
+              href={CALENDLY_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 sm:px-5 sm:text-sm"
+            >
               Book a Demo
-            </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -272,13 +280,15 @@ export default function Home() {
             Ready-to-use STEM content — chapter-wise, one click on your smartboard.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row">
-            <button
+            <Link
               id="cta-demo"
-              onClick={() => scrollToId("contact-section")}
-              className="w-full rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 hover:shadow-xl sm:w-auto"
+              href={CALENDLY_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full rounded-full bg-primary px-7 py-3 text-center text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 hover:shadow-xl sm:w-auto"
             >
               Book a Demo
-            </button>
+            </Link>
             <button
               onClick={() => scrollToId("sections-features")}
               className="w-full rounded-full border border-slate-300 px-7 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 sm:w-auto"
@@ -447,12 +457,14 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <button
-                    onClick={() => scrollToId("contact-section")}
-                    className="mt-1 w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
+                  <Link
+                    href={CALENDLY_DEMO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
                   >
                     Book a Demo
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Right — screenshot (more space) */}
@@ -549,9 +561,14 @@ export default function Home() {
               <p className="max-w-md text-sm text-muted-foreground">
                 Consistent, high-quality digital teaching — every classroom, every teacher.
               </p>
-              <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md">
+              <Link
+                href={CALENDLY_DEMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
+              >
                 Book a Demo for Your Institute
-              </button>
+              </Link>
             </div>
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-muted shadow-lg ring-1 ring-border/70 sm:rounded-2xl">
               <Image
@@ -640,9 +657,14 @@ export default function Home() {
                 Lead the shift — not lag behind.
               </p>
               <div className="flex flex-wrap gap-3 pt-1">
-                <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 hover:shadow-md">
+                <Link
+                  href={CALENDLY_DEMO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow transition-transform hover:-translate-y-0.5 hover:shadow-md"
+                >
                   Book a Demo
-                </button>
+                </Link>
                 <Link href="/contact" className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 sm:inline-flex sm:items-center sm:justify-center">
                   Contact Sales
                 </Link>
@@ -680,9 +702,14 @@ export default function Home() {
                 Quick answers. Questions? Our team is here.
               </p>
               <div className="flex flex-wrap gap-3 pt-1">
-                <button onClick={() => scrollToId("contact-section")} className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm">
+                <Link
+                  href={CALENDLY_DEMO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm"
+                >
                   Book a Demo
-                </button>
+                </Link>
                 <Link href="/contact" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary sm:inline-flex sm:items-center sm:justify-center">
                   Contact Sales
                 </Link>
@@ -729,9 +756,14 @@ export default function Home() {
               One demo — see how we standardize quality and make every STEM class more engaging.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button onClick={() => scrollToId("contact-section")} className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5">
+              <Link
+                href={CALENDLY_DEMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-full bg-primary px-8 py-3 text-center text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5"
+              >
                 Book a Demo
-              </button>
+              </Link>
               <Link href="/contact" className="w-full rounded-full border border-slate-600 px-8 py-3 text-center text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto sm:py-3.5">
                 Talk to Sales
               </Link>
