@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import {
   Monitor,
@@ -15,6 +16,8 @@ import {
   ChevronUp,
   ChevronLeft,
   ChevronRight,
+  ArrowUpRight,
+  Sparkles,
   Presentation,
   Pencil,
   ScanSearch,
@@ -60,6 +63,12 @@ const faqItems = [
 ];
 
 const CALENDLY_DEMO_URL = "https://calendly.com/addonsidigital/dttdemo";
+const CALENDLY_INLINE_URL =
+  "https://calendly.com/addonsidigital/dttdemo?hide_event_type_details=1";
+const INSTITUTE_SOFTWARE_URL =
+  "https://creepon.triumphal.io/login?next=/dashboard/home";
+const HELP_CENTER_URL = "https://clickandteach.tawk.help";
+const FREE_TRIAL_URL = "/free-trial";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -605,6 +614,33 @@ export default function Home() {
               <p className="max-w-sm text-sm text-muted-foreground">
                 Teachers and management — one platform.
               </p>
+              <div className="flex flex-wrap gap-3 pt-1">
+                <a
+                  href={INSTITUTE_SOFTWARE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-fit items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  Open Institute Software
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+                <Link
+                  href={FREE_TRIAL_URL}
+                  className="inline-flex w-fit items-center gap-2 rounded-full bg-secondary px-6 py-2.5 text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-secondary/80"
+                >
+                  101 Days Free Trial
+                  <Sparkles className="h-4 w-4 text-primary" />
+                </Link>
+                <a
+                  href={HELP_CENTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-background px-6 py-2.5 text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-secondary"
+                >
+                  Product Guide / Help Center
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 md:gap-6">
@@ -755,19 +791,33 @@ export default function Home() {
             <p className="mx-auto mt-4 max-w-md text-sm text-slate-400">
               One demo — see how we standardize quality and make every STEM class more engaging.
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl">
+              <div
+                className="calendly-inline-widget"
+                data-url={CALENDLY_INLINE_URL}
+                style={{ minWidth: 320, height: 700 }}
+              />
+            </div>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href={CALENDLY_DEMO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-full bg-primary px-8 py-3 text-center text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5"
               >
-                Book a Demo
+                Open in Calendly
               </Link>
-              <Link href="/contact" className="w-full rounded-full border border-slate-600 px-8 py-3 text-center text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto sm:py-3.5">
+              <Link
+                href="/contact"
+                className="w-full rounded-full border border-slate-600 px-8 py-3 text-center text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 sm:w-auto sm:py-3.5"
+              >
                 Talk to Sales
               </Link>
             </div>
+            <Script
+              src="https://assets.calendly.com/assets/external/widget.js"
+              strategy="afterInteractive"
+            />
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 sm:gap-6">
               <span>✓ No credit card required</span>
               <span>✓ Personalized demo</span>

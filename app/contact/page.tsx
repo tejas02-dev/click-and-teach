@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone } from "lucide-react";
 import { Footer } from "@/components/Footer";
 
@@ -22,12 +23,16 @@ export default function ContactPage() {
             href="/"
             className="flex items-center gap-2.5 text-foreground hover:opacity-90"
           >
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-md sm:h-10 sm:w-10">
-              CT
+            <div className="relative h-[80px] w-[180px] ">
+              <Image
+                src="/click-and-teach-logo.png"
+                alt="Click & Teach logo"
+                fill
+                className="object-contain p-1.5"
+                sizes="40px"
+                priority
+              />
             </div>
-            <span className="text-base font-bold tracking-tight sm:text-lg">
-              Click &amp; Teach
-            </span>
           </Link>
           <Link
             href="/"

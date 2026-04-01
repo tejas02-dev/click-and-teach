@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, ArrowRight } from "lucide-react";
 
 const PHONE_NUMBERS = [
@@ -14,10 +15,15 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2.5 text-foreground hover:opacity-90">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-sm">
-                CT
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-border">
+                <Image
+                  src="/click-and-teach-logo.png"
+                  alt="Click & Teach logo"
+                  fill
+                  className="object-contain p-1.5"
+                  sizes="36px"
+                />
               </div>
-              <span className="text-lg font-bold tracking-tight">Click &amp; Teach</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
               Digital teaching platform for STEM educators. Ready-to-use content, one click on your smartboard.
